@@ -2,41 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* PPL Electric Utilities Design System */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
+    /* PPL Electric Brand Colors */
+    --ppl-blue: 237 100% 27%; /* #001489 */
+    --ppl-blue-light: 204 100% 36%; /* #007AB8 */
+    --ppl-blue-50: 237 100% 95%;
+    --ppl-blue-100: 237 100% 90%;
+    --ppl-blue-900: 237 100% 15%;
+    
+    /* Core System Colors */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    --foreground: 237 15% 15%;
+    
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 237 15% 15%;
+    
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
+    --popover-foreground: 237 15% 15%;
+    
+    --primary: 237 100% 27%; /* PPL Deep Blue */
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 204 100% 36%; /* PPL Secondary Blue */
+    --secondary-foreground: 0 0% 100%;
+    
+    --muted: 220 15% 96%;
+    --muted-foreground: 220 10% 46%;
+    
+    --accent: 204 100% 95%;
+    --accent-foreground: 237 100% 27%;
+    
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 220 15% 91%;
+    --input: 220 15% 96%;
+    --ring: 237 100% 27%;
+    
+    /* PPL Custom Properties */
     --radius: 0.5rem;
+    --ppl-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --ppl-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --ppl-gradient-primary: linear-gradient(135deg, hsl(var(--ppl-blue)), hsl(var(--ppl-blue-light)));
+    --ppl-gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--accent)));
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +122,38 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* PPL Hero Button Variants */
+  .btn-ppl-primary {
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 py-3 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md;
+  }
+  
+  .btn-ppl-secondary {
+    @apply bg-secondary hover:bg-secondary/90 text-secondary-foreground font-medium px-6 py-3 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md;
+  }
+  
+  .btn-ppl-outline {
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-medium px-6 py-3 rounded-lg transition-all duration-200;
+  }
+
+  /* PPL Cards */
+  .ppl-card {
+    @apply bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+  
+  .ppl-card-hero {
+    @apply bg-gradient-to-br from-primary to-secondary text-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer;
+  }
+
+  /* PPL Utilities */
+  .ppl-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .ppl-section {
+    @apply py-12 lg:py-16;
   }
 }

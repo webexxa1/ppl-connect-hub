@@ -1,73 +1,110 @@
-import { 
-  CreditCard, 
-  Zap, 
-  FileText, 
-  TrendingUp, 
+import {
+  CreditCard,
+  Zap,
+  FileText,
+  TrendingUp,
   AlertTriangle,
   CheckCircle,
   Clock,
-  DollarSign
+  DollarSign,
+  Headset,
+  BarChart2,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { usePersona, type PersonaKey } from '@/contexts/PersonaContext';
+
+const personaCopy: Record<PersonaKey, { title: string; subtitle: string; badge: string }> = {
+  residential: {
+    title: 'Welcome back, Jamie',
+    subtitle: 'Manage your household account, billing, and service updates',
+    badge: 'Residential Experience',
+  },
+  smallBusiness: {
+    title: 'Riverview Bakery Operations',
+    subtitle: 'Track usage across locations, invoices, and energy programs',
+    badge: 'Small Business Experience',
+  },
+  agent: {
+    title: 'Agent Workspace Overview',
+    subtitle: 'Stay aligned on customer cases, billing status, and proactive outreach',
+    badge: 'Member Services Agent',
+  },
+  supervisor: {
+    title: 'Supervisor Console',
+    subtitle: 'Monitor team performance, escalations, and service KPIs',
+    badge: 'Supervisor Experience',
+  },
+};
+
+const heroCardContent: Record<PersonaKey, Array<{ title: string; headline: string; caption: string; icon: typeof CreditCard; variant: 'primary' | 'warning' | 'success' }>> = {
+  residential: [
+    { title: 'Pay Bill', headline: 'Current balance: $127.83', caption: 'Due: March 15, 2024', icon: CreditCard, variant: 'primary' },
+    { title: 'Report Outage', headline: 'Power status: Normal', caption: 'Last checked: Just now', icon: Zap, variant: 'warning' },
+    { title: 'Move Service', headline: 'Start, stop, or transfer', caption: 'Schedule service changes', icon: FileText, variant: 'success' },
+  ],
+  smallBusiness: [
+    { title: 'Pay Invoice', headline: 'Outstanding: $3,420.19', caption: 'Multi-site billing summary', icon: CreditCard, variant: 'primary' },
+    { title: 'Report Outage', headline: 'No disruptions detected', caption: 'Status across 3 locations', icon: Zap, variant: 'warning' },
+    { title: 'Upgrade Service', headline: 'Efficiency programs', caption: 'Enroll in demand response', icon: FileText, variant: 'success' },
+  ],
+  agent: [
+    { title: 'Customer Queue', headline: '8 waiting contacts', caption: 'Prioritize high-impact cases', icon: Headset, variant: 'primary' },
+    { title: 'Outage Follow-ups', headline: '3 neighborhoods', caption: 'Customers expecting updates', icon: Zap, variant: 'warning' },
+    { title: 'Pending Cases', headline: '12 open service tickets', caption: 'Review escalations', icon: FileText, variant: 'success' },
+  ],
+  supervisor: [
+    { title: 'Team Performance', headline: 'CSAT 94%', caption: 'Rolling 7-day average', icon: BarChart2, variant: 'primary' },
+    { title: 'Outage Events', headline: '2 active outages', caption: 'Monitor restoration ETAs', icon: Zap, variant: 'warning' },
+    { title: 'Workforce Staffing', headline: 'On shift: 28 agents', caption: 'Coverage meets demand', icon: Headset, variant: 'success' },
+  ],
+};
+
+const heroCardVariants: Record<'primary' | 'warning' | 'success', string> = {
+  primary: 'ppl-card-hero group cursor-pointer',
+  warning:
+    'bg-gradient-to-br from-warning to-orange-500 text-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group',
+  success:
+    'bg-gradient-to-br from-success to-green-600 text-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group',
+};
 
 const Dashboard = () => {
+  const { persona } = usePersona();
+  const copy = personaCopy[persona];
+  const cards = heroCardContent[persona];
+
   return (
     <div className="ppl-container ppl-section">
       {/* Welcome Section */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground mb-2">
-          Welcome back, John
-        </h1>
-        <p className="text-muted-foreground">
-          Manage your PPL Electric account and services
-        </p>
+        <Badge variant="secondary" className="mb-3">
+          {copy.badge}
+        </Badge>
+        <h1 className="text-3xl font-bold text-foreground mb-2">{copy.title}</h1>
+        <p className="text-muted-foreground">{copy.subtitle}</p>
       </div>
 
       {/* Hero Action Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {/* Pay Bill */}
-        <Card className="ppl-card-hero group cursor-pointer">
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Pay Bill</h3>
-                <p className="text-white/90 mb-4">Current balance: $127.83</p>
-                <p className="text-sm text-white/80">Due: March 15, 2024</p>
-              </div>
-              <CreditCard className="w-12 h-12 text-white/90 group-hover:scale-110 transition-transform" />
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Report Outage */}
-        <Card className="bg-gradient-to-br from-warning to-orange-500 text-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group">
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Report Outage</h3>
-                <p className="text-white/90 mb-4">Power status: Normal</p>
-                <p className="text-sm text-white/80">Last checked: Just now</p>
-              </div>
-              <Zap className="w-12 h-12 text-white/90 group-hover:scale-110 transition-transform" />
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Move Service */}
-        <Card className="bg-gradient-to-br from-success to-green-600 text-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group">
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Move Service</h3>
-                <p className="text-white/90 mb-4">Start, stop, or transfer</p>
-                <p className="text-sm text-white/80">Schedule service changes</p>
-              </div>
-              <FileText className="w-12 h-12 text-white/90 group-hover:scale-110 transition-transform" />
-            </div>
-          </CardContent>
-        </Card>
+        {cards.map((card) => {
+          const Icon = card.icon;
+          const variantClass = heroCardVariants[card.variant];
+          return (
+            <Card key={card.title} className={variantClass}>
+              <CardContent className="p-0">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2">{card.title}</h3>
+                    <p className="text-white/90 mb-4">{card.headline}</p>
+                    <p className="text-sm text-white/80">{card.caption}</p>
+                  </div>
+                  <Icon className="w-12 h-12 text-white/90 group-hover:scale-110 transition-transform" />
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
 
       {/* Account Overview */}

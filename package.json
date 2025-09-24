@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -b gh-pages",
+    "predeploy": "npm run build && cp dist/index.html dist/404.html",
+    "deploy": "gh-pages -d dist -b gh-pages -t -c pplelectric.webexxa.com",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"
